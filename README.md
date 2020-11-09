@@ -8,6 +8,14 @@ MZ CEC 감정대화분류 해커톤 emo:)tale팀 : 박건우, 변자민
 
 ----
 
+## Requirement
+
+```
+python=3.6
+pytorch=
+pandas=
+```
+
 ## data path
 
 ```
@@ -15,8 +23,18 @@ MZ CEC 감정대화분류 해커톤 emo:)tale팀 : 박건우, 변자민
 /data/dev_data.json
 ```
 
-## model
+<br>
 
 ----
+
+<br>
+
+## model
+
+<br>
+
+----
+
+<br>
 
 ## result
