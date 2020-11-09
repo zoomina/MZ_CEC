@@ -12,8 +12,8 @@ MZ CEC 감정대화분류 해커톤 emo:)tale팀 : 박건우, 변자민
 
 ```
 python=3.6
-pytorch=
-pandas=
+torch=1.7.0+cu101
+pandas=1.1.4
 ```
 
 ## data path
