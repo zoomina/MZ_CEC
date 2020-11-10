@@ -60,6 +60,13 @@ torch=1.7.0+cu101
 ]
 ```
 
+### Preprocessing
+
+- json2csv.py
+```
+python ./json2csv.py <input_json_data> --output-dir <output_dir> --output-name <output_file_name_without_extension>
+```
+
 <br>
 
 ----
@@ -67,6 +74,13 @@ torch=1.7.0+cu101
 <br>
 
 ## Model
+
+
+### train
+
+
+### test
+
 
 <br>
 
