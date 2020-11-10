@@ -24,3 +24,7 @@ def main():
             inner = {"emotion_u": profile_info["emotion"]["type"][1], "emotion_i": profile_info["emotion"]["type"],
                      "content": talk_info["content"]}
             df = df.append(inner, ignore_index=True)
+
+    df.to_csv(os.path.join(args.output_dir, args.output_name + ".csv"))
+
+main()
