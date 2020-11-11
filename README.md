@@ -10,7 +10,8 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
 
 ```
 !pip install mxnet-cu101
-!pip install gluonnlp pandas tqdm
+!pip install gluonnlp==0.9.0
+!pip install pandas tqdm
 !pip install sentencepiece==0.1.85
 !pip install transformers==2.1.1
 !pip install torch  #원래 ==1.3.1
