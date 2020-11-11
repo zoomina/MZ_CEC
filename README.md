@@ -9,10 +9,14 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
 ## Requirement
 
 ```
-numpy=1.19.3
-pandas=1.1.4
-matplotlib=3.3.2
-torch=1.7.0+cu101
+!pip install mxnet-cu101
+!pip install gluonnlp pandas tqdm
+!pip install sentencepiece==0.1.85
+!pip install transformers==2.1.1
+!pip install torch  #원래 ==1.3.1
+
+#SKT에서 공개한 KoBERT 모델을 불러옵니다 
+!pip install git+https://git@github.com/SKTBrain/KoBERT.git@master
 ```
 
 <br>
