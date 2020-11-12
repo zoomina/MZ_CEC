@@ -9,12 +9,13 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
 ## Requirement
 
 ```
-!pip install mxnet==1.6.0
-!pip install gluonnlp==0.9.0
-!pip install pandas tqdm
-!pip install sentencepiece==0.1.85
-!pip install transformers==2.1.1
-!pip install torch  #원래 ==1.3.1
+mxnet==1.6.0
+gluonnlp==0.9.0
+pandas
+tqdm
+sentencepiece==0.1.85
+transformers==2.1.1
+torch  #원래 ==1.3.1
 
 #SKT에서 공개한 KoBERT 모델을 불러옵니다 
 !pip install git+https://git@github.com/SKTBrain/KoBERT.git@master
@@ -22,7 +23,7 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
 
 <br>
 
-## Data Sample
+## Data Structure
 
 ```
 [
@@ -72,6 +73,15 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
 python ./json2csv.py <input_json_data> --output-dir <output_dir> --output-name <output_file_name_without_extension>
 ```
 
+> **result**
+>
+> ```
+> pd.DataFrame({"emotion_u": profile_info["emotion"]["type"][1], "emotion_i": profile_info["emotion"]["type"],
+>               "age" : profile_info["persona"]["human"][0], "gender" : profile_info["persona"]["human"][1],
+>               "situation" : profile_info["emotion"]["situation"][0], "disease" : profile_info["emotion"]["situation"][0],
+>               "content": talk_info["content"]})
+> ```
+
 <br>
 
 ----
@@ -89,6 +99,9 @@ python ./train.py --batch-size <batch_size> --num-epochs <num_epochs> --num-work
 
 ### test
 
+```
+python ./test.py <checkpoint_path> --batch-size <batch_size> --num-workers <num_workers>
+```
 
 <br>
 

@@ -1,36 +1,50 @@
+import argparse
 from torch.utils.data import Dataset
-from tqdm import tqdm_notebook
+from tqdm import tqdm
+from tqdm.notebook import tqdm
 
 from preprocessing import *
 
 def calc_accuracy(X,Y):
     max_vals, max_indices = torch.max(X, 1)
-    train_acc = (max_indices == Y).sum().data.cpu().numpy()/max_indices.size()[0]
-    return train_acc
+    test_acc = (max_indices == Y).sum().data.cpu().numpy()/max_indices.size()[0]
+    return test_acc
 
 def test(test_dataloader, model, device):
     model.eval()
     answer=[]
-    train_acc = 0.0
     test_acc = 0.0
     ## TypeError: 'DataLoader' object does not support indexing ##
-    for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(tqdm_notebook(test_dataloader)):
-        token_ids = token_ids.long().to(device)
-        segment_ids = segment_ids.long().to(device)
-        valid_length= valid_length
-        label = label.long().to(device)
-        out = model(token_ids, valid_length, segment_ids)
-        max_vals, max_indices = torch.max(out, 1)
-        answer.append(max_indices.cpu().clone().numpy())
-        test_acc += calc_accuracy(out, label)
+    with torch.no_grad():
+        for batch_id, (token_ids, valid_length, segment_ids, label) in tqdm(enumerate(test_dataloader)):
+            token_ids = token_ids.long().to(device)
+            segment_ids = segment_ids.long().to(device)
+            valid_length= valid_length
+            label = label.long().to(device)
+            out = model(token_ids, valid_length, segment_ids)
+            max_vals, max_indices = torch.max(out, 1)
+            answer.append(max_indices.cpu().clone().numpy())
+            test_acc += calc_accuracy(out, label)
     print(test_acc / (batch_id+1))
 
 if __name__ == "__main__":
-    max_len = 64
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("checkpoint")
+    parser.add_argument("--batch-size", type=int, default=64, help="default=64")
+    parser.add_argument("--num-workers", type=int, default=5, help="default=5")
+    args = parser.parse_args()
+    
+    batch_size = args.batch_size
+    num_workers = args.num_workers
+    checkpoint = torch.load(args.checkpoint)
+    '''
     batch_size = 24
-    num_workers = 1
+    num_workers = 0
+    checkpoint = torch.load("result/epoch3_batch24.pt")
+    '''
+    max_len = 64
     model = BERTClassifier().build_model()
-    checkpoint = torch.load('result/epoch3_batch24.pt')
     model.load_state_dict(checkpoint)
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     _, eval_dtls = preprocessing()

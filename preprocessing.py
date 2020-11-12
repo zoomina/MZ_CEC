@@ -3,7 +3,6 @@ from kobert.utils import get_tokenizer
 
 import pandas as pd
 import re
-import argparse
 from sklearn.model_selection import train_test_split
 
 from model.kobert import *
@@ -54,11 +53,3 @@ def test_loader(dtls, max_len, batch_size, num_workers):
 
     return test_dataloader
 
-if __name__ == "__main__":
-    '''
-    parser = argparse.ArgumentParser()
-    parser.add_argument("data")
-    parser.add_argument("--output-dir", required=True)
-    parser.add_argument("--output-name", required=True)
-    args = parser.parse_args()
-    '''
