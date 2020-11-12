@@ -1,3 +1,4 @@
+import os
 from tqdm import tqdm
 from tqdm.notebook import tqdm
 
@@ -43,17 +44,25 @@ def train(train_dataloader, dev_dataloader, model, device, optimizer, loss_fn, e
             test_acc += calc_accuracy(out, label)
         print("epoch {} test acc {}".format(e + 1, test_acc / (batch_id + 1)))
 
-    torch.save(model.state_dict(), 'result/epoch3_batch24.pt')
+    if not os.path.exists("./result"):
+        os.mkdir("./result")
+    torch.save(model.state_dict(), 'result/epoch{}_batch{}.pt'.format(epoch, batch_size))
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch-size", help="default=64")
+    parser.add_argument("--num-epochs", help="default=3")
+    parser.add_argument("--num-workers", help="default=5")
+    args = parser.parse_args()
+
     max_len = 64
-    batch_size = 24
+    batch_size = args.batch_size if args.batch_size else 64
     warmup_ratio = 0.1
-    num_epochs = 3
+    num_epochs = args.num_epochs if args.num_epochs else 3
     max_grad_norm = 1
     log_interval = 200
     learning_rate = 5e-5
-    num_workers = 1
+    num_workers = args.num_workers if args.num_workers else 5
     model = BERTClassifier().build_model()
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 

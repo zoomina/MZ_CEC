@@ -9,7 +9,7 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
 ## Requirement
 
 ```
-!pip install mxnet-cu101
+!pip install mxnet==1.6.0
 !pip install gluonnlp==0.9.0
 !pip install pandas tqdm
 !pip install sentencepiece==0.1.85
@@ -83,6 +83,9 @@ python ./json2csv.py <input_json_data> --output-dir <output_dir> --output-name <
 
 ### train
 
+```
+python ./train.py --batch-size <batch_size> --num-epochs <num_epochs> --num-workers <num_workers>
+```
 
 ### test
 

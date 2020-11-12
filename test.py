@@ -15,14 +15,14 @@ def test(test_dataloader, model, device):
     test_acc = 0.0
     ## TypeError: 'DataLoader' object does not support indexing ##
     for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(tqdm_notebook(test_dataloader)):
-      token_ids = token_ids.long().to(device)
-      segment_ids = segment_ids.long().to(device)
-      valid_length= valid_length
-      label = label.long().to(device)
-      out = model(token_ids, valid_length, segment_ids)
-      max_vals, max_indices = torch.max(out, 1)
-      answer.append(max_indices.cpu().clone().numpy())
-      test_acc += calc_accuracy(out, label)
+        token_ids = token_ids.long().to(device)
+        segment_ids = segment_ids.long().to(device)
+        valid_length= valid_length
+        label = label.long().to(device)
+        out = model(token_ids, valid_length, segment_ids)
+        max_vals, max_indices = torch.max(out, 1)
+        answer.append(max_indices.cpu().clone().numpy())
+        test_acc += calc_accuracy(out, label)
     print(test_acc / (batch_id+1))
 
 if __name__ == "__main__":
