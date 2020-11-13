@@ -51,20 +51,26 @@ def train(train_dataloader, dev_dataloader, model, device, optimizer, loss_fn, e
     torch.save(model.state_dict(), 'result/epoch{}_batch{}.pt'.format(epoch, batch_size))
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch-size", type=int, default=64, help="default=64")
     parser.add_argument("--num-epochs", type=int, default=3, help="default=3")
     parser.add_argument("--num-workers", type=int, default=5, help="default=5")
     args = parser.parse_args()
 
-    max_len = 64
     batch_size = args.batch_size
-    warmup_ratio = 0.1
     num_epochs = args.num_epochs
+    num_workers = args.num_workers
+    '''
+    batch_size = 24
+    num_epochs = 3
+    num_workers = 1
+    '''
+    max_len = 64
+    warmup_ratio = 0.1
     max_grad_norm = 1
     log_interval = 200
     learning_rate = 5e-5
-    num_workers = args.num_workers
     model = BERTClassifier().build_model()
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 

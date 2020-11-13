@@ -14,9 +14,8 @@ def test(test_dataloader, model, device):
     model.eval()
     answer=[]
     test_acc = 0.0
-    ## TypeError: 'DataLoader' object does not support indexing ##
     with torch.no_grad():
-        for batch_id, (token_ids, valid_length, segment_ids, label) in tqdm(enumerate(test_dataloader)):
+        for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(tqdm(test_dataloader)):
             token_ids = token_ids.long().to(device)
             segment_ids = segment_ids.long().to(device)
             valid_length= valid_length
@@ -50,6 +49,5 @@ if __name__ == "__main__":
     _, eval_dtls = preprocessing()
 
     data_test = test_loader(eval_dtls, max_len, batch_size, num_workers)
-    test_dataloader = torch.utils.data.DataLoader(data_test, batch_size=batch_size, num_workers=num_workers)
 
-    test(test_dataloader, model, device)
+    test(data_test, model, device)
