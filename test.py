@@ -1,5 +1,4 @@
 import argparse
-from torch.utils.data import Dataset
 from tqdm import tqdm
 from tqdm.notebook import tqdm
 
@@ -32,6 +31,7 @@ if __name__ == "__main__":
     parser.add_argument("checkpoint")
     parser.add_argument("--batch-size", type=int, default=64, help="default=64")
     parser.add_argument("--num-workers", type=int, default=5, help="default=5")
+    parser.add_argument("--num-classes", type=int, default=6, help="default=5")
     args = parser.parse_args()
     
     batch_size = args.batch_size
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     checkpoint = torch.load("result/epoch3_batch24.pt")
     '''
     max_len = 64
-    model = BERTClassifier().build_model()
+    model = BERTClassifier(num_classes=args.num_classes).build_model()
     model.load_state_dict(checkpoint)
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     _, eval_dtls = preprocessing()

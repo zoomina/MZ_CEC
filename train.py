@@ -56,6 +56,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch-size", type=int, default=64, help="default=64")
     parser.add_argument("--num-epochs", type=int, default=3, help="default=3")
     parser.add_argument("--num-workers", type=int, default=5, help="default=5")
+    parser.add_argument("--num-classes", type=int, default=6, help="default=5")
     args = parser.parse_args()
 
     batch_size = args.batch_size
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     max_grad_norm = 1
     log_interval = 200
     learning_rate = 5e-5
-    model = BERTClassifier().build_model()
+    model = BERTClassifier(num_classes=args.num_classes).build_model()
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
     dtls, _ = preprocessing()

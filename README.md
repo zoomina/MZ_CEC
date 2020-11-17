@@ -94,13 +94,13 @@ python ./json2csv.py <input_json_data> --output-dir <output_dir> --output-name <
 ### train
 
 ```
-python ./train.py --batch-size <batch_size> --num-epochs <num_epochs> --num-workers <num_workers>
+python ./train.py --batch-size <batch_size> --num-epochs <num_epochs> --num-workers <num_workers> --num-classes <num_classes::int>
 ```
 
 ### test
 
 ```
-python ./test.py <checkpoint_path> --batch-size <batch_size> --num-workers <num_workers>
+python ./test.py <checkpoint_path> --batch-size <batch_size> --num-workers <num_workers> --num-classes <num_classes::int>
 ```
 
 <br>
