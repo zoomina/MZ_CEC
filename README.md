@@ -102,6 +102,10 @@ python ./train.py --batch-size <batch_size> --num-epochs <num_epochs> --num-work
 ```
 python ./test.py <checkpoint_path> --batch-size <batch_size> --num-workers <num_workers> --num-classes <num_classes::int> --small-emotion <small_emotion::int>
 ```
+### evaluation
+
+```
+python ./evaluation.py <data_path>
 
 <br>
 
