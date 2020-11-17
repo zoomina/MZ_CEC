@@ -106,7 +106,7 @@ python ./test.py <checkpoint_path> --batch-size <batch_size> --num-workers <num_
 
 ```
 python ./evaluation.py <data_path>
-
+```
 <br>
 
 ## Result
