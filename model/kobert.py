@@ -26,7 +26,8 @@ class BERTClassifier(nn.Module):
         super(BERTClassifier, self).__init__()
         self.dr_rate = dr_rate
         self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-        self.bertmodel, _ = get_pytorch_kobert_model()
+        self.bert, _ = get_pytorch_kobert_model()
+        self.num_classes = num_classes
 
         self.classifier = nn.Linear(hidden_size, num_classes)
         if dr_rate:
@@ -41,12 +42,12 @@ class BERTClassifier(nn.Module):
     def forward(self, token_ids, valid_length, segment_ids):
         attention_mask = self.gen_attention_mask(token_ids, valid_length)
 
-        _, pooler = self.bertmodel(input_ids=token_ids, token_type_ids=segment_ids.long(),
+        _, pooler = self.bert(input_ids=token_ids, token_type_ids=segment_ids.long(),
                               attention_mask=attention_mask.float().to(token_ids.device))
         if self.dr_rate:
             out = self.dropout(pooler)
         return self.classifier(out)
 
     def build_model(self):
-        model = BERTClassifier(dr_rate=0.5).to(self.device)
+        model = BERTClassifier(num_classes=self.num_classes, dr_rate=0.5).to(self.device)
         return model.to(self.device)

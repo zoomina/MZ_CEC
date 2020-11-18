@@ -51,12 +51,12 @@ def train(train_dataloader, dev_dataloader, model, device, optimizer, loss_fn, e
     torch.save(model.state_dict(), 'result/epoch{}_batch{}.pt'.format(epoch, batch_size))
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser()
+    parser.add_argument("data", help="input_data(.json)_path")
     parser.add_argument("--batch-size", type=int, default=64, help="default=64")
     parser.add_argument("--num-epochs", type=int, default=3, help="default=3")
     parser.add_argument("--num-workers", type=int, default=5, help="default=5")
-    parser.add_argument("--num-classes", type=int, default=6, help="default=5")
+    parser.add_argument("--num-classes", type=int, default=6, help="default=6")
     args = parser.parse_args()
 
     batch_size = args.batch_size
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     model = BERTClassifier(num_classes=args.num_classes).build_model()
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
-    dtls, _ = preprocessing()
+    dtls = preprocessing(json2csv(args.data))
     train_dataloader, test_dataloader = data_loader(dtls, max_len, batch_size, num_workers)
 
     no_decay = ['bias', 'LayerNorm.weight']

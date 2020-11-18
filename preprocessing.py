@@ -7,25 +7,54 @@ from sklearn.model_selection import train_test_split
 
 from model.kobert import *
 
-def preprocessing():
-    trainpath = './data/train_df.csv'
-    devpath = './data/dev_df.csv'
-    train = pd.read_csv(trainpath)
-    dev = pd.read_csv(devpath)
+def json2csv(data, test=False):
+    df = pd.DataFrame(columns=["emotion_u", "emotion_i", "age", "gender", "situation", "disease", "content"])
 
-    dev['emotion_u'] -= 1
-    train['emotion_u'] -= 1
+    with open(data, "r", encoding="utf-8") as file:
+        root = next(file).strip()
+        for line in file:
+            line = eval(line[:-2])  # keys = profile, talk
+            profile_info = line["profile"]  # keys = persona-id, persona, emotion
+            talk_info = line["talk"]  # keys = id, content
+            if test:
+                inner = {"talk_id": talk_info["id"]["talk-id"], "emotion_u": 99, "emotion_i": 99,
+                         "age": profile_info["persona"]["human"][0], "gender": profile_info["persona"]["human"][1],
+                         "situation": profile_info["emotion"]["situation"][0],
+                         "disease": profile_info["emotion"]["situation"][0],
+                         "content": talk_info["content"]}
+            else:
+                inner = {"talk_id": talk_info["id"]["talk-id"], "emotion_u": profile_info["emotion"]["type"][1],
+                         "emotion_i": profile_info["emotion"]["type"],
+                         "age": profile_info["persona"]["human"][0], "gender": profile_info["persona"]["human"][1],
+                         "situation": profile_info["emotion"]["situation"][0],
+                         "disease": profile_info["emotion"]["situation"][0],
+                         "content": talk_info["content"]}
+            df = df.append(inner, ignore_index=True)
 
-    p = re.compile("[{}:H'S0123,]")
-    train['content'] = list(map(lambda sent: str((p.sub('', sent))), train['content']))
-    dev['content'] = list(map(lambda sent: str((p.sub('', sent))), dev['content']))
+    df['content'] = list(map(lambda dic: ' '.join(dic.values()), df['content']))
 
-    train_df = train[['content', 'emotion_u']]
-    dev_df = dev[['content', 'emotion_u']]
+    return df
 
-    dtls = [list(train_df.iloc[i, :]) for i in range(len(train_df))]
-    eval_dtls = [list(dev_df.iloc[i, :]) for i in range(len(dev_df))]
-    return dtls, eval_dtls
+def preprocessing(df, inner_emotion=-1, test=False):
+    if test:
+        if inner_emotion == -1:
+            df_new = df[['content', 'emotion_u']]
+        else:
+            df_new = df[['content', 'emotion_upper']][df['emotion_upper'] == inner_emotion]
+
+        dtls = [list(df_new.iloc[i, :]) for i in range(len(df_new))]
+        return dtls
+
+    df['emotion_u'] = df['emotion_u'].apply(lambda x : int(x) - 1)  #astype(int)   #
+
+    if inner_emotion == -1:
+        df_new = df[['content', 'emotion_u']]
+    else:
+        df_new = df[['content', 'emotion_upper']][df['emotion_upper'] == inner_emotion]
+
+    dtls = [list(df_new.iloc[i, :]) for i in range(len(df_new))]
+
+    return dtls
 
 def data_loader(dtls, max_len, batch_size, num_workers):
     dataset_train, dataset_test = train_test_split(dtls, test_size=0.2, random_state=123)
