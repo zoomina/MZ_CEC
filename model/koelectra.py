@@ -50,6 +50,7 @@ class ElectraClassifier(nn.Module):
         self.attention_mask = attention_mask
         self.classifier = nn.Linear(hidden_size, num_classes)
         if dr_rate:
+
             self.dropout = nn.Dropout(p=dr_rate)
 
     def forward(self, token_ids, segment_ids):

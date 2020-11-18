@@ -16,6 +16,7 @@ tqdm
 sentencepiece==0.1.85
 transformers==2.1.1
 torch  #원래 ==1.3.1
+numpy<1.19.4
 
 #SKT에서 공개한 KoBERT 모델을 불러옵니다 
 !pip install git+https://git@github.com/SKTBrain/KoBERT.git@master
