@@ -93,7 +93,7 @@ python ./json2csv.py <input_json_data> --output-dir <output_dir> --output-name <
 
 ## Model
 
-SKTBrain KoBERT를 pretrain하여 사용  
+SKTBrain KoBERT를 finetuning하여 사용  
   
   
 
