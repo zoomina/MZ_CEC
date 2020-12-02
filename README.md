@@ -2,7 +2,9 @@
 
 <br>
 
-MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
+MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민  
+  
+장려상 수상
 
 <br>
 
@@ -91,6 +93,13 @@ python ./json2csv.py <input_json_data> --output-dir <output_dir> --output-name <
 
 ## Model
 
+SKTBrain KoBERT를 pretrain하여 사용  
+  
+  
+
+![model](https://user-images.githubusercontent.com/39390943/100821973-c6cc1600-3494-11eb-84ef-286562a9b3de.png)
+
+<br>
 
 ### train
 
@@ -103,6 +112,7 @@ python ./train.py --batch-size <batch_size> --num-epochs <num_epochs> --num-work
 ```
 python ./test.py <checkpoint_path> --batch-size <batch_size> --num-workers <num_workers> --num-classes <num_classes::int> --small-emotion <small_emotion::int>
 ```
+
 ### evaluation
 
 ```
@@ -111,3 +121,8 @@ python ./evaluation.py <data_path>
 <br>
 
 ## Result
+
+감정 대분류(6개 감정) 정확도 : 약 0.61  
+감정 소분류(각 10개 감정) 정확도 :   
+  
+최종(60개 감정) 정확도 : 

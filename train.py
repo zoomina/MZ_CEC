@@ -15,6 +15,8 @@ def calc_accuracy(X,Y):
     return train_acc
 
 def train(train_dataloader, dev_dataloader, model, device, optimizer, loss_fn, epoch):
+    max_grad_norm = 1
+    log_interval = 200
     for e in range(epoch):
         train_acc = 0.0
         test_acc = 0.0
@@ -69,8 +71,6 @@ if __name__ == "__main__":
     '''
     max_len = 64
     warmup_ratio = 0.1
-    max_grad_norm = 1
-    log_interval = 200
     learning_rate = 5e-5
     model = BERTClassifier(num_classes=args.num_classes).build_model()
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
