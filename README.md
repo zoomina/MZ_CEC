@@ -6,6 +6,9 @@ MZ CEC 감정인식대회 해커톤 emo:)tale 팀 : 박건우, 변자민
   
 장려상 수상 (4등)
 
+MZ CEC Classification Emotional Conversation Hackathon Team emo:)tale : Geonu Park, Jamin Byeon  
+4th  
+
 <br>
 
 ## Requirement
@@ -123,11 +126,14 @@ python ./evaluation.py <data_path>
 ## Result
 
 감정 대분류(6개 감정) 정확도 : 약 0.61  
+Accuracy for classification on 6 emotion : about 0.61  
 감정 소분류(각 10개 감정) 정확도 :    
+Accuracy for classification on 60 emotion (10 on each category above) :
   U1: 0.46   
   U2: 0.49   
   U3: 0.59   
   U4: 0.62   
   U5: 0.59   
   U6: 0.46   
-최종(60개 감정) 정확도 : 0.33
+최종(60개 감정) 정확도 : 0.33  
+Final accuracy on 60 emotion : 0.33
